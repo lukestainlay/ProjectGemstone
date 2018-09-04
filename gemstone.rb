@@ -63,30 +63,53 @@ What is your first card?
 cardname = gets.strip.to_s
 
 
-# lightforge value return
+
+# # validate cardname through heartharena
+
+if heartharena[type.to_sym][cardname.to_sym] == nil
+    puts """
+        Your card was not recognised. 
+        Please type card name again
+        """
+    cardname = gets.strip.to_s
+    # # what if this cardname is also wrong?????
+else
+    cardname = cardname
+end
+
+
+# # #  heartharena value return:
+
+heartharenascore = heartharena[type.to_sym][cardname.to_sym]
+
+
+# # lightforge value return:
 
 i = 0
 y = 0
 
 while i < 1000
+
     if lightforge[i][:"Name"] == cardname  
 
-        while y < 10
+       while y < 10
+            
             if lightforge[i][:"Scores"][y][:"Hero"] == type
        
             lightforgescore = lightforge[i][:"Scores"][y][:"Score"]
-            i = 1000
-            y = 10
+             i = 1000
+              y = 10
 
             else
-            y += 1
+              y += 1
 
             end
 
         end
     
     else
-        i += 1
+         i += 1
+
     end
 
 end
