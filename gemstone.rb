@@ -3,23 +3,25 @@
 
 require_relative 'lightforge.rb'
 require_relative 'heartharena.rb'
+require 'rainbow'
 
 lightforge = LightForge::LIGHTFORGE
 heartharena = HearthArena::HEARTHARENA
+
 
 puts """
 
 What is the class you are playing?
 
-[1] Druid
-[2] Hunter
-[3] Mage
-[4] Paladin
-[5] Priest
-[6] Rogue
-[7] Shaman
-[8] Warlock
-[9] Warrior
+[1] #{Rainbow("Druid").chocolate}
+[2] #{Rainbow("Hunter").green}
+[3] #{Rainbow("Mage").deepskyblue}
+[4] #{Rainbow("Paladin").yellowgreen}
+[5] #{Rainbow("Priest").white}
+[6] #{Rainbow("Rogue").darkslategray}
+[7] #{Rainbow("Shaman").blue}
+[8] #{Rainbow("Warlock").purple}
+[9] #{Rainbow("Warrior").red}
 
 Please enter a number
 
@@ -30,32 +32,32 @@ type = ""
 
 case numberselection
 when 1
-    type = "Druid"
+    type = Rainbow("Druid").chocolate
 when 2
-    type = "Hunter"
+    type = Rainbow("Hunter").green
 when 3
-    type = "Mage"
+    type = Rainbow("Mage").deepskyblue
 when 4
-    type = "Paladin"
+    type = Rainbow("Priest").white
 when 5
-    type = "Priest"
+    type = Rainbow("Paladin").yellowgreen
 when 6
-    type = "Rogue"
+    type = Rainbow("Rogue").darkslategray
 when 7
-    type = "Shaman"
+    type = Rainbow("Shaman").blue
 when 8
-    type = "Warlock"
+    type = Rainbow("Warlock").purple
 when 9
-    type = "Warrior"
+    type = Rainbow("Warrior").red
 
 end
-
 
 puts """
 
 You are playing #{type}.
 
 """
+
 
 
 
@@ -177,7 +179,7 @@ The Hearth Arena score is: #{cardname2_has}
 
 
 
-## Colourise
+
 
 # how to make first letter upcase ??
 
