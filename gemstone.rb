@@ -32,29 +32,38 @@ type = ""
 
 case numberselection
 when 1
-    type = Rainbow("Druid").chocolate
+    type = "Druid"
+    typecolor = Rainbow("Druid").chocolate
 when 2
-    type = Rainbow("Hunter").green
+    type = "Hunter" 
+    typecolor = Rainbow("Hunter").green
 when 3
-    type = Rainbow("Mage").deepskyblue
+    type  = "Mage"
+    tyoecolor = Rainbow("Mage").deepskyblue
 when 4
-    type = Rainbow("Priest").white
+    type = "Priest"
+    typecolor = Rainbow("Priest").white
 when 5
-    type = Rainbow("Paladin").yellowgreen
+    type = "Paladin"
+    typecolor = Rainbow("Paladin").yellowgreen
 when 6
-    type = Rainbow("Rogue").darkslategray
+    type = "Rogue"
+    typecolor = Rainbow("Rogue").darkslategray
 when 7
-    type = Rainbow("Shaman").blue
+    type = "Shaman"
+    typecolor = Rainbow("Shaman").blue
 when 8
-    type = Rainbow("Warlock").purple
+    type = "Warlock"
+    typecolor = Rainbow("Warlock").purple
 when 9
-    type = Rainbow("Warrior").red
+    type = "Warrior"
+    typecolor = Rainbow("Warrior").red
 
 end
 
 puts """
 
-You are playing #{type}.
+You are playing #{typecolor}.
 
 """
 
@@ -111,7 +120,9 @@ def findheartharenascore(type, cardname)
 
 end
 
+
 ## FIRST CARD:
+loop do
 
 puts """
 
@@ -119,7 +130,20 @@ What is your first card?
 
 """
 
-cardname1 = gets.strip.to_s
+# returned string to be in Snake Case (can this be a method?):
+
+cardname1 = gets.strip.split(" ")
+arr = []
+
+cardname1.each do |word|
+    arr.push(word.capitalize)
+end
+
+cardname1 = arr.join(" ").to_s
+
+puts cardname1
+
+
 
 cardname1_lfs = findlightforgescore(type, cardname1)
 cardname1_has = findheartharenascore(type, cardname1)
@@ -173,8 +197,15 @@ The Hearth Arena score is: #{cardname2_has}
  The Hearth Arena score is: #{cardname3_has}
  
  """
+puts "Would you like to run again? (Y or N)"
 
+runagain = gets.strip.upcase
 
+break if runagain == "N"
+
+end
+
+puts "Enjoy your Hearthstone game. Good Luck!"
 
 
 

@@ -12,31 +12,32 @@ require 'rainbow'
 # [9] Rainbow("Warrior").red
 
 
-def colorthewords(words, colors)
-    return Rainbow(words).colors
-end
-
-puts colorthewords("""You are playing #{type}""", blue)
-
-
-
-
-# puts "type something"
-
-# sometext = gets.strip.split(" ")
-
-# p sometext
-
-# sometext.each do |word|
-#     word.capitalize
-#     print word
+# def colorthewords(words, colors)
+#     return Rainbow(words).colors
 # end
 
+# puts colorthewords("""You are playing #{type}""", blue)
+
+
+
+puts "type something"
+
+sometext = gets.strip.split(" ")
+
+p sometext
+arr = []
+
+sometext.each do |word|
+    arr.push(word.capitalize)
+end
+puts arr.join(" ").to_s
+
+
 # p sometext
 
-# # sometext = sometext2.chomp(',').to_s
+# sometext = sometext2.chomp(',').to_s
 
-# # p sometext
+# p sometext
 
 
 # cardname = gets.strip.split(" ")
