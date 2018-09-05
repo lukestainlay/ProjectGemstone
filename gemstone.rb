@@ -1,6 +1,4 @@
 
-
-
 require_relative 'lightforge.rb'
 require_relative 'heartharena.rb'
 require 'rainbow'
@@ -9,10 +7,89 @@ lightforge = LightForge::LIGHTFORGE
 heartharena = HearthArena::HEARTHARENA
 
 
+
+# # # convert a string to have capital letter of each 
+# # # consisten with the databases
+
+def makeitcaps(string)
+    arr = []
+    new_arr = string.split(" ")
+        new_arr.each do |word|
+            arr.push(word.capitalize)
+        end
+    return arr.join(" ").to_s
+end
+
+
+
+
+# # # Light Forge Value Return
+# # # this will return the value from lightforge database
+# # # if there is no value (eg database error) then "Not found"
+# # # will be returned if the  card is entered incorrectly 
+# # # (eg typo) then "Card not found" will be returned
+
+def findlightforgescore(type, cardname)
+
+    lightforge = LightForge::LIGHTFORGE
+
+    i = 0
+    y = 0
+    
+    while i+1 <= lightforge.length
+        if lightforge[i][:"Name"] == cardname  
+            while y < 10
+                
+                    if      lightforge[i][:"Scores"][y][:"Hero"] == type
+        
+                            lightforgescore = lightforge[i][:"Scores"][y][:"Score"]
+                            i = 1000
+                            y = 10
+
+                    elsif   y+1 == lightforge[i][:"Scores"].length
+                            lightforgescore = "Not found"
+                            i = 1000
+                            y = 10
+                                                    
+                                     
+                    else    y += 1
+                end     
+            end
+        elsif   i+1 == lightforge.length
+            
+                lightforgescore = "Card not found"
+                i = 1000
+                y = 10
+
+        else    i += 1
+
+        end
+    end
+
+return lightforgescore
+
+end
+
+
+
+# # # Hearth Arena Value Return
+# # # will return the value from Hearth Arena database
+# # # if no card is not found (eg due to database error 
+# # # or typo) then a nil value will be returned
+
+def findheartharenascore(type, cardname)
+
+    heartharena = HearthArena::HEARTHARENA
+    heartharenascore = heartharena[type.to_sym][cardname.to_sym]
+    
+    return heartharenascore
+end
+
+
+# # # Start of UI:
+
 puts """
-
 What is the class you are playing?
-
 [1] #{Rainbow("Druid").chocolate}
 [2] #{Rainbow("Hunter").green}
 [3] #{Rainbow("Mage").deepskyblue}
@@ -24,11 +101,11 @@ What is the class you are playing?
 [9] #{Rainbow("Warrior").red}
 
 Please enter a number
-
 """
 
+
 numberselection = gets.to_i
-type = ""
+
 
 case numberselection
 when 1
@@ -58,178 +135,78 @@ when 8
 when 9
     type = "Warrior"
     typecolor = Rainbow("Warrior").red
-
 end
 
+
 puts """
-
 You are playing #{typecolor}.
-
 """
 
 
-
-
-# # # lightforge value return:
-
-def findlightforgescore(type, cardname)
-
-    lightforge = LightForge::LIGHTFORGE
-
-    i = 0
-    y = 0
-
-    while i < 1000
-
-        if lightforge[i][:"Name"] == cardname  
-
-        while y < 10
-                
-                if lightforge[i][:"Scores"][y][:"Hero"] == type
-        
-                lightforgescore = lightforge[i][:"Scores"][y][:"Score"]
-                i = 1000
-                y = 10
-
-                else
-                y += 1
-
-                end
-
-            end
-        
-        else
-            i += 1
-
-        end
-
-    end
-
-return lightforgescore
-
-end
-
-# #  heartharena value return
-
-def findheartharenascore(type, cardname)
-
-    heartharena = HearthArena::HEARTHARENA
-    heartharenascore = heartharena[type.to_sym][cardname.to_sym]
-
-    return heartharenascore
-
-end
-
-
-## FIRST CARD:
 loop do
 
+        ## FIRST CARD:
 puts """
-
 What is your first card?
-
 """
 
-# returned string to be in Snake Case (can this be a method?):
-
-cardname1 = gets.strip.split(" ")
-arr = []
-
-cardname1.each do |word|
-    arr.push(word.capitalize)
-end
-
-cardname1 = arr.join(" ").to_s
-
-puts cardname1
-
-
+cardname1 = gets.strip.to_s
+cardname1 = makeitcaps(cardname1)
 
 cardname1_lfs = findlightforgescore(type, cardname1)
 cardname1_has = findheartharenascore(type, cardname1)
 
-
 puts """
-
 The Light Forge score is: #{cardname1_lfs}
 The Hearth Arena score is: #{cardname1_has}
-
 """
 
-## SECOND CARD:
 
+        ## SECOND CARD:
 puts """
-
 What is your second card?
-
 """
 
 cardname2 = gets.strip.to_s
+cardname2 = makeitcaps(cardname2)
 
 cardname2_lfs = findlightforgescore(type, cardname2)
 cardname2_has = findheartharenascore(type, cardname2)
 
-
 puts """
-
 The Light Forge score is: #{cardname2_lfs}
 The Hearth Arena score is: #{cardname2_has}
-
 """
 
- ## THIRD CARD
+        ## THIRD CARD
 
- puts """
-
- What is your third card?
- 
- """
+puts """
+What is your third card?
+"""
  
  cardname3 = gets.strip.to_s
+ cardname3 = makeitcaps(cardname3)
  
  cardname3_lfs = findlightforgescore(type, cardname3)
  cardname3_has = findheartharenascore(type, cardname3)
  
  
- puts """
- 
- The Light Forge score is: #{cardname3_lfs}
- The Hearth Arena score is: #{cardname3_has}
- 
- """
+puts """
+The Light Forge score is: #{cardname3_lfs}
+The Hearth Arena score is: #{cardname3_has}
+"""
+
 puts "Would you like to run again? (Y or N)"
 
 runagain = gets.strip.upcase
 
-break if runagain == "N"
-
-end
-
-puts "Enjoy your Hearthstone game. Good Luck!"
+break if runagain == "N"  # this it to break the loop
 
 
+end  # this is for the end of the loop
 
+puts """
+Enjoy your Hearthstone game. Good Luck!
 
+"""
 
-
-# how to make first letter upcase ??
-
-# # # validate cardname through heartharena
-
-# def cardnamevalidate(cardname)
-
-
-# if heartharena[type.to_sym][cardname.to_sym] == nil
-#     puts """
-#         Your card was not recognised. 
-#         Please type card name again
-#         """
-#     cardname = gets.strip.to_s
-#     # # what if this cardname is also wrong?????
-# else
-#     cardname = cardname
-# end
-
-# # # #  heartharena value return:
-
-# heartharenascore = heartharena[type.to_sym][cardname.to_sym]
